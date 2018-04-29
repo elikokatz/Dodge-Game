@@ -5,16 +5,19 @@ import java.awt.Rectangle;
 public class Player extends GameObject {
 
 	Handler handler;
+	// These booleans are used to save if the player has a status
 	public static boolean speed, invur;
 	private int timer_speed, velScale = 1;
 
-	public Player(int x, int y, ID id, Handler handler) { // constructor
+	// Basic constructor
+	public Player(int x, int y, ID id, Handler handler) {
 		super(x, y, id);
 		this.handler = handler;
 	}
 
+	// Each game tick
 	@Override
-	public void tick() { // each game tick, the code repeats.
+	public void tick() { 
 		if ((x <= 0 && velX > 0) || (x >= Game.WIDTH - 30 && velX < 0) || (x < Game.WIDTH - 30 && x > 0)) {
 			x += velX * velScale;
 		}
@@ -30,16 +33,19 @@ public class Player extends GameObject {
 		}
 		collision();
 	}
-
+	
+	// Used to check for collision with enemy/potions
 	private void collision() {
 		for (int i = 0; i < handler.object.size(); i++) {
 			GameObject tempObject = handler.object.get(i);
 			if (tempObject.getID() == ID.enemy1) {
+				// if the collision is with enemy1
 				if (getBounds().intersects(tempObject.getBounds())) {
 					HUD.HEALTH -= 2;
 				}
 			}
 			if (tempObject.getID() == ID.health_potion) {
+				// if the collision is with an health potion
 				if (getBounds().intersects(tempObject.getBounds())) {
 					if (HUD.HEALTH <= 30) {
 						HUD.HEALTH += 70;
@@ -50,6 +56,7 @@ public class Player extends GameObject {
 				}
 			}
 			if (tempObject.getID() == ID.speed_potion) {
+				// if the collision is with a speed potion
 				if (getBounds().intersects(tempObject.getBounds())) {
 					speed = true;
 					timer_speed = 100;
@@ -58,19 +65,21 @@ public class Player extends GameObject {
 				}
 			}
 		}
-		// checks if the player is dead
+		// Checks if the player's health is 0 (or below if his health got down really fast)
 		if (HUD.HEALTH <= 0) {
 			System.out.println("Level: " + Game.level);
 			System.exit(0);
 		}
 	}
 
+	// Renders the player ** used to show the enemy on the screen
 	@Override
-	public void render(Graphics g) { // checks the player each time
+	public void render(Graphics g) { 
 		g.setColor(Color.white);
 		g.fillRect(x, y, 32, 32);
 	}
-
+	
+	// Returns the rectangle bounds ** used to determine collision 
 	@Override
 	public Rectangle getBounds() {
 		return new Rectangle(x, y, 32, 32);

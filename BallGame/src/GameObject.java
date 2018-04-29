@@ -7,6 +7,7 @@ public abstract class GameObject {
 	protected ID id;
 	protected int velX, velY;
 
+	// Basic constructor
 	public GameObject(int x, int y, ID id) {
 		this.x = x;
 		this.y = y;
@@ -18,6 +19,10 @@ public abstract class GameObject {
 	public abstract void render(Graphics g);
 
 	public abstract Rectangle getBounds();
+	
+	/*
+	 * Getters and setters
+	 */
 
 	public void setX(int x) {
 		this.x = x;

@@ -4,13 +4,16 @@ import java.awt.Graphics;
 
 public class HUD {
 
+	// The player's health
 	public static int HEALTH = 100;
+	// No really reason to have these
 	private String level, money;
 
 	public void tick() {
 
 	}
 
+	// Renders the hud
 	public void render(Graphics g) {
 		g.setColor(Color.black);
 		g.fillRect(30, 30, 500, 32);
